@@ -28,6 +28,10 @@ const Cart = (props) => {
     setIsCheckout(true);
   };
 
+  const clearCartHandler = () => {
+    cartCtx.clearCart();
+  };
+
   const submitOrderHandler = async (userData) => {
     setIsSubmitting(true);
     const response = await fetch(
@@ -42,11 +46,13 @@ const Cart = (props) => {
     );
 
     if (!response.ok) {
-      return new Error("Something Went wrong");
+      setIsSubmitting(false);
+      return alert("Something went wrong");
     }
 
     setIsSubmitting(false);
     setDidSubmit(true);
+    clearCartHandler();
   };
 
   const cartItems = (
